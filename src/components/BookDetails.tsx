@@ -6,9 +6,10 @@ import { prompts } from '@/test/dummy_data';
 import { useQuery } from '@tanstack/react-query';
 import { fetchComment } from '@/services/books';
 import Comment from './Comment';
+import CommentSkeleton from './CommentSkeleton';
 
 function BookDetails({ book }: { book: Book }) {
-  const { updateBook } = useActions();
+  const { updateBook, updateFilters } = useActions();
   const [prompt, setPrompt] = useState('');
 
   const {
@@ -25,6 +26,11 @@ function BookDetails({ book }: { book: Book }) {
   function handlePrompt(p: string) {
     // get prompt query
     setPrompt(p);
+  }
+
+  function handleSimilarBooks() {
+    const prompt = `Books like ${book.title} by ${book.authors}`;
+    updateFilters([{ filter: 'general', values: [prompt] }]);
   }
 
   return (
@@ -62,12 +68,18 @@ function BookDetails({ book }: { book: Book }) {
                   {p}
                 </button>
               ))}
+              <button
+                onClick={() => handleSimilarBooks()}
+                className="px-4 py-2 bg-gray-700 text-gray-300 rounded-md transition hover:bg-gray-600 hover:scale-105"
+              >
+                📚 Go to Simmilar Books
+              </button>
             </div>
           </div>
         </div>
       </div>
       {/* todo: here should be skeleton of comment */}
-      {isLoading && 'Loading...'}
+      {isLoading && <CommentSkeleton />}
       {error && 'Cannot load the comment...'}
       {comment && (
         <Comment bookId={book.id} prompt={prompt} description={comment} />

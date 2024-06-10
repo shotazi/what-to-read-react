@@ -48,7 +48,7 @@ export const prompts = [
   'Tell me about the context',
   'What critics say?',
   'What are main ideas?',
-  'Suggest similar books',
+  // 'Suggest similar books',
 ];
 
 export const READY_MADE_FILTERS = [

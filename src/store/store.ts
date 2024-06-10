@@ -43,8 +43,8 @@ const useBookStore = create<State & Action>((set) => ({
           return {
             book: {
               ...book,
-              cover_i: metaData.cover_i,
-              published: metaData.publish_year[0],
+              cover_i: metaData?.cover_i,
+              published: metaData?.publish_year[0],
             },
           };
         } else {

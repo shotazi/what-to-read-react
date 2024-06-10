@@ -1,6 +1,3 @@
-import { prompts } from '../test/dummy_data';
-import Prompts from './Prompts';
-
 function Comment({
   bookId,
   prompt,
@@ -18,7 +15,7 @@ function Comment({
       <h2 className="w-full h-8 border-b border-b-gray-500 text-xl font-semibold text-white">
         {prompt}
       </h2>
-      <p className="mt-2">{description}</p>
+      <p className="mt-2 text-gray-300">{description}</p>
       {/* <Prompts prompts={prompts.filter((p) => p !== prompt)} /> */}
     </div>
   );

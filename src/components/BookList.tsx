@@ -3,6 +3,7 @@ import { useActions } from '../store/store';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import { getBook } from '@/services/getBook';
 import BookCover from './BookCover';
+import BookSkeletons from '@/components/BookSkeletons';
 // import { Book } from '../types/types';
 
 function BookList({ filters }: { filters: string }) {
@@ -12,6 +13,7 @@ function BookList({ filters }: { filters: string }) {
 
   const {
     isPending,
+    isFetching,
     isError,
     data: books,
     error,
@@ -39,8 +41,12 @@ function BookList({ filters }: { filters: string }) {
 
   console.log('get books queries', booksMetaData);
 
-  if (isPending) {
-    return <p>Loading</p>;
+  if (isPending || isFetching) {
+    return (
+      <>
+        <BookSkeletons />
+      </>
+    );
   }
 
   if (isError) {
@@ -63,10 +69,7 @@ function BookList({ filters }: { filters: string }) {
             loadingCoverUrl={getBooksMetaData[i].isLoading}
           />
           <div className="flex flex-col items-start gap-2 text-left">
-            <h2 className="text-xl font-bold">
-              {book.title}{' '}
-              {booksMetaData[i] && `(${booksMetaData[i]?.publish_year[0]})`}
-            </h2>
+            <h2 className="text-xl font-bold">{book.title}</h2>
             <p className="text-gray-300">
               {book.description.substring(0, 70)}...
             </p>
